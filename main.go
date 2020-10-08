@@ -32,10 +32,10 @@ func main() {
 
 	flag.Parse()
 	file, err := os.Open(file_path)
-	defer file.Close()
 	if err != nil {
 		panic("read file" + err.Error())
 	}
+	defer file.Close()
 
 	// var result_arr []string
 	map_ele := map[string]string{}

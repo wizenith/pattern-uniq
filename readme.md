@@ -1,6 +1,6 @@
 # Pattern-uniq
 
-**Pattern-uniq** is a command lind tool for help your content avoid dupe elements you don't want
+**Pattern-uniq** is a command lind tool for help your content to avoid dupe elements you don't want
 
 ## Features
 

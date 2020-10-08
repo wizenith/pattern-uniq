@@ -9,14 +9,14 @@ import (
 )
 
 var (
-	pattern  string
-	filePath string
-	destPath string
+	pattern   string
+	file_path string
+	dest_path string
 )
 
 func init() {
-	flag.StringVar(&filePath, "o", "", "the filepath of target")
-	flag.StringVar(&destPath, "d", "", "the filepath of destination")
+	flag.StringVar(&file_path, "o", "", "the filepath of target")
+	flag.StringVar(&dest_path, "d", "", "the filepath of destination")
 	flag.StringVar(&pattern, "p", "='?(.*)", "the pattern you want to match in regular expression")
 	flag.Usage = usage
 }
@@ -31,13 +31,13 @@ func usage() {
 func main() {
 
 	flag.Parse()
-	file, err := os.Open(filePath)
+	file, err := os.Open(file_path)
 	defer file.Close()
 	if err != nil {
 		panic("read file" + err.Error())
 	}
 
-	var result_arr []string
+	// var result_arr []string
 	map_ele := map[string]string{}
 	scanner := bufio.NewScanner(file)
 	regex := regexp.MustCompile(pattern)
@@ -51,17 +51,13 @@ func main() {
 		map_ele[match[1]] = cur_line
 	}
 
-	for _, e := range map_ele {
-		result_arr = append(result_arr, e)
-	}
-
-	w, err := os.Create(destPath)
+	w, err := os.Create(dest_path)
 	if err != nil {
 		panic(err)
 	}
 	defer w.Close()
 
-	for _, data := range result_arr {
+	for _, data := range map_ele {
 		_, err := w.WriteString(data + "\n")
 		if err != nil {
 			panic(err)

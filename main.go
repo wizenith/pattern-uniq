@@ -37,6 +37,12 @@ func main() {
 	}
 	defer file.Close()
 
+	w, err := os.Create(dest_path)
+	if err != nil {
+		panic(err)
+	}
+	defer w.Close()
+	// 上面先把檔案開出來，下面才再處理商業邏輯
 	// var result_arr []string
 	map_ele := map[string]string{}
 	scanner := bufio.NewScanner(file)
@@ -50,12 +56,6 @@ func main() {
 
 		map_ele[match[1]] = cur_line
 	}
-
-	w, err := os.Create(dest_path)
-	if err != nil {
-		panic(err)
-	}
-	defer w.Close()
 
 	for _, data := range map_ele {
 		_, err := w.WriteString(data + "\n")

@@ -10,12 +10,12 @@ import (
 
 var (
 	pattern   string
-	file_path string
+	src_path  string
 	dest_path string
 )
 
 func init() {
-	flag.StringVar(&file_path, "o", "", "the filepath of target")
+	flag.StringVar(&src_path, "o", "", "the filepath of target")
 	flag.StringVar(&dest_path, "d", "", "the filepath of destination")
 	flag.StringVar(&pattern, "p", "='?(.*)", "the pattern you want to match in regular expression")
 	flag.Usage = usage
@@ -29,10 +29,10 @@ func usage() {
 }
 
 func main() {
-	file_path = "/home/wizenith/Desktop/git_alias"
+	src_path = "/home/wizenith/Desktop/git_alias"
 	dest_path = "/home/wizenith/Desktop/git_alias_filtered"
 	flag.Parse()
-	file, err := os.Open(file_path)
+	file, err := os.Open(src_path)
 	if err != nil {
 		panic("read file" + err.Error())
 	}
@@ -56,19 +56,14 @@ func main() {
 		}
 
 		map_ele[match[1]] = cur_line
-		data := map_ele[match[1]]
+	}
+
+	for _, data := range map_ele {
 		_, err := w.WriteString(data + "\n")
 		if err != nil {
 			panic(err)
 		}
 	}
-
-	// for _, data := range map_ele {
-	//   _, err := w.WriteString(data + "\n")
-	//   if err != nil {
-	//     panic(err)
-	//   }
-	// }
 	w.Sync()
 	fmt.Println("done")
 

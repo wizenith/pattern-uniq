@@ -29,7 +29,8 @@ func usage() {
 }
 
 func main() {
-
+	file_path = "/home/wizenith/Desktop/git_alias"
+	dest_path = "/home/wizenith/Desktop/git_alias_filtered"
 	flag.Parse()
 	file, err := os.Open(file_path)
 	if err != nil {
@@ -55,14 +56,19 @@ func main() {
 		}
 
 		map_ele[match[1]] = cur_line
-	}
-
-	for _, data := range map_ele {
+		data := map_ele[match[1]]
 		_, err := w.WriteString(data + "\n")
 		if err != nil {
 			panic(err)
 		}
 	}
+
+	// for _, data := range map_ele {
+	//   _, err := w.WriteString(data + "\n")
+	//   if err != nil {
+	//     panic(err)
+	//   }
+	// }
 	w.Sync()
 	fmt.Println("done")
 

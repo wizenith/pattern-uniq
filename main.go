@@ -42,7 +42,7 @@ func main() {
 		panic(err)
 	}
 	defer w.Close()
-	// 上面先把檔案開出來，下面才再處理商業邏輯
+	// let files of input and output be ready before processing any logic
 	// var result_arr []string
 	map_ele := map[string]string{}
 	scanner := bufio.NewScanner(file)
